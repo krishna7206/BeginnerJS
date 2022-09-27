@@ -4,54 +4,65 @@ function getComputerChoice()
     return choice[Math.floor(Math.random()*choice.length)]
 }
 
-
-
-function singleRound(playerSelection,ComputerSelection)
+function disable()
 {
-   let player = playerSelection
-   let computer = ComputerSelection
-   if(player == "Rock" && computer == "Scissors" || player == 'Scissors' && computer == 'Paper' || player == 'Paper' && computer == 'Rock')
-   {
-    return "You Win"
-   }
-   if(player == computer)
-   {
-    return "Tie"
-   }   
-   else
-   {
-    return "You Lose"
-   }
-
+    button.forEach(elem=>{
+        elem.disabled = true
+    })
 }
 
 
-function multipleRound()
+
+
+
+function playGame(play)
 {   
-    let player_win=0;
-    let comp_win=0;
-    for(let i=0;i<5;i++){
-        let play = prompt('Enter your String of choice(Rock,Paper and Scissor')
-        let comp = getComputerChoice();
-        if( singleRound(play,comp) == "You Win")
-        {
-            player_win = player_win+1
-            console.log("Player Win")
-        }
-        else{
-            comp_win = comp_win + 1
-            console.log("Player Loss")
-        }
-
-
-    }
-    if (player_win > comp_win)
+    let player = play;
+    let computer = getComputerChoice();
+    
+    if(player == "Rock" && computer == "Scissors" || player == 'Scissors' && computer == 'Paper' || player == 'Paper' && computer == 'Rock')
     {
-       console.log("Player Wins all")
+     
+        
+     playerScore+=1
+     result = "you win with player score "+ playerScore +" computer score "+ComputerScore
+    
+    if(playerScore == 5)
+    {
+        result+= " player wins"
+        disable()
     }
-    else{
-        console.log("Comp Wins")
     }
-}
+    else if(player == computer)
+    {
+      result = "Tie with player score "+playerScore+" computer score "+ComputerScore
+    }   
+    else
+    {
+        ComputerScore+=1
+        result = "You Lose with score "+ ComputerScore +"player score "+playerScore
+        
+    
+       if(ComputerScore == 5)
+       {
+        result += " computer wins"
+        disable()
+       }
+    }
+    document.getElementById('result').innerHTML = result
+ 
+ }
 
-multipleRound()
+
+
+let playerScore = 0;
+let ComputerScore = 0;
+const button = document.querySelectorAll('input');
+     button.forEach((button) => {
+        button.addEventListener('click',function()  {
+            
+            playGame(button.value);
+
+        });   
+});
+
